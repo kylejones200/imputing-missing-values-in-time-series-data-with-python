@@ -6,6 +6,12 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
+import logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
 # Add src to path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
@@ -140,7 +146,7 @@ def plot_interpolation_comparison(
     fig.tight_layout()
     save_plot(fig, config.output_dir / "irregular_series_interpolation.png", dpi=300)
     plt.close(fig)
-    print(f" Interpolation plot saved -> {config.output_dir / 'irregular_series_interpolation.png'}")
+    logger.info(f" Interpolation plot saved -> {config.output_dir / 'irregular_series_interpolation.png'}")
 
 
 def main() -> None:
@@ -154,25 +160,25 @@ def main() -> None:
     config = parse_config(config_dict, script_dir)
     
     # Simulate irregular series
-    print("Simulating irregular time series...")
+    logger.info("Simulating irregular time series...")
     original = simulate_irregular_series(config)
-    print(f"Generated {len(original)} observed points (out of {config.n_points} possible)")
+    logger.info(f"Generated {len(original)} observed points (out of {config.n_points} possible)")
     
     # Resample using forward fill
-    print(f"\nResampling with rule: {config.resample_rule}")
+    logger.info(f"\nResampling with rule: {config.resample_rule}")
     resampled = resample_series(original, config.resample_rule)
-    print(f"Resampled to {len(resampled)} points")
+    logger.info(f"Resampled to {len(resampled)} points")
     
     # GP interpolation
-    print("\nInterpolating with Gaussian Process...")
+    logger.info("\nInterpolating with Gaussian Process...")
     gp_interpolated, gp_std = interpolate_gp(original, config)
-    print(f"GP interpolated to {len(gp_interpolated)} points")
+    logger.info(f"GP interpolated to {len(gp_interpolated)} points")
     
     # Create visualization
-    print("\nCreating visualization...")
+    logger.info("\nCreating visualization...")
     plot_interpolation_comparison(original, resampled, gp_interpolated, gp_std, config)
     
-    print("\n Irregular series analysis complete")
+    logger.info("\n Irregular series analysis complete")
     
     if config_dict.get("plotting", {}).get("show_plot", True):
         plt.show()
