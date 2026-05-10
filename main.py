@@ -109,43 +109,44 @@ def plot_interpolation_comparison(
     config: Config
 ) -> None:
     """Plot comparison of interpolation methods."""
-    fig, axes = plt.subplots(3, 1, figsize=(10, 8), sharex=True)
+    if plot:
+        fig, axes = plt.subplots(3, 1, figsize=(10, 8), sharex=True)
     
     # Original (irregular)
-    axes[0].scatter(original.index, original.values, s=20, alpha=0.6, color="k", label="Original (irregular)")
-    axes[0].set_title("Original Irregular Series")
-    axes[0].set_ylabel("Value")
-    axes[0].legend()
-    axes[0].grid(True, alpha=0.3)
+        axes[0].scatter(original.index, original.values, s=20, alpha=0.6, color="k", label="Original (irregular)")
+        axes[0].set_title("Original Irregular Series")
+        axes[0].set_ylabel("Value")
+        axes[0].legend()
+        axes[0].grid(True, alpha=0.3)
     
     # Resampled (forward fill)
-    axes[1].plot(resampled.index, resampled.values, "b-", linewidth=1.5, label="Resampled (forward fill)", alpha=0.8)
-    axes[1].scatter(original.index, original.values, s=20, alpha=0.6, color="k", label="Original")
-    axes[1].set_title("Resampled (Forward Fill)")
-    axes[1].set_ylabel("Value")
-    axes[1].legend()
-    axes[1].grid(True, alpha=0.3)
+        axes[1].plot(resampled.index, resampled.values, "b-", linewidth=1.5, label="Resampled (forward fill)", alpha=0.8)
+        axes[1].scatter(original.index, original.values, s=20, alpha=0.6, color="k", label="Original")
+        axes[1].set_title("Resampled (Forward Fill)")
+        axes[1].set_ylabel("Value")
+        axes[1].legend()
+        axes[1].grid(True, alpha=0.3)
     
     # GP interpolated
-    axes[2].plot(gp_interpolated.index, gp_interpolated.values, "r-", linewidth=1.5, label="GP Interpolated", alpha=0.8)
-    axes[2].fill_between(
-        gp_interpolated.index,
-        gp_interpolated.values - 2 * gp_std,
-        gp_interpolated.values + 2 * gp_std,
-        alpha=0.2,
-        color="r",
-        label="95% CI"
-    )
-    axes[2].scatter(original.index, original.values, s=20, alpha=0.6, color="k", label="Original")
-    axes[2].set_title("Gaussian Process Interpolation")
-    axes[2].set_xlabel("Date")
-    axes[2].set_ylabel("Value")
-    axes[2].legend()
-    axes[2].grid(True, alpha=0.3)
+        axes[2].plot(gp_interpolated.index, gp_interpolated.values, "r-", linewidth=1.5, label="GP Interpolated", alpha=0.8)
+        axes[2].fill_between(
+            gp_interpolated.index,
+            gp_interpolated.values - 2 * gp_std,
+            gp_interpolated.values + 2 * gp_std,
+            alpha=0.2,
+            color="r",
+            label="95% CI"
+        )
+        axes[2].scatter(original.index, original.values, s=20, alpha=0.6, color="k", label="Original")
+        axes[2].set_title("Gaussian Process Interpolation")
+        axes[2].set_xlabel("Date")
+        axes[2].set_ylabel("Value")
+        axes[2].legend()
+        axes[2].grid(True, alpha=0.3)
     
-    fig.tight_layout()
-    save_plot(fig, config.output_dir / "irregular_series_interpolation.png", dpi=300)
-    plt.close(fig)
+        fig.tight_layout()
+        save_plot(fig, config.output_dir / "irregular_series_interpolation.png", dpi=300)
+        plt.close(fig)
     logger.info(f" Interpolation plot saved -> {config.output_dir / 'irregular_series_interpolation.png'}")
 
 
