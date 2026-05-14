@@ -27,13 +27,13 @@ plt.figure(figsize=(12, 6)) plt.plot(df.index, df.values, label='Original', mark
 
 plt.tight_layout() plt.savefig('forward_fill_missing_values.png') plt.show()
 
-**Advantages:**
+Advantages:
 
 - Simple and quick to implement.
 
 - Preserves trends without introducing sudden changes.
 
-**Drawbacks:**
+Drawbacks:
 
 - Propagates outdated values if missing intervals are large.
 
@@ -43,7 +43,7 @@ plt.tight_layout() plt.savefig('forward_fill_missing_values.png') plt.show()
 
 Backward fill replaces missing values with the next observed value, assuming that future observations approximate the missing point.
 
-**Python Example: Backward Fill**
+Python Example: Backward Fill
 
     # Backward Fill
 df_bfill = df.bfill()
@@ -53,11 +53,11 @@ plt.figure(figsize=(12, 6)) plt.plot(df.index, df.values, label='Original', mark
 
 plt.tight_layout() plt.savefig('back_fill_missing_values.png') plt.show()
 
-**Advantages:**
+Advantages:
 
 - Simple to use and effective for quickly stabilizing series.
 
-**Drawbacks:**
+Drawbacks:
 
 - May introduce \"future leakage\" if used improperly in predictive models.
 
@@ -67,7 +67,7 @@ plt.tight_layout() plt.savefig('back_fill_missing_values.png') plt.show()
 
 Mean fill replaces missing values with the mean of the available data.
 
-**Python Example: Mean Fill**
+Python Example: Mean Fill
 
     # Mean Fill
 df_mfill = df.fillna(df.mean())
@@ -77,13 +77,13 @@ plt.figure(figsize=(12, 6)) plt.plot(df.index, df.values, label='Original', mark
 
 plt.tight_layout() plt.savefig('mean_fill_missing_values.png') plt.show()
 
-**Advantages:**
+Advantages:
 
 - Simple and fast to compute.
 
 - Works well for stationary series without strong trends.
 
-**Drawbacks:**
+Drawbacks:
 
 - Smooths out variations, making temporal patterns harder to identify.
 
@@ -93,7 +93,7 @@ plt.tight_layout() plt.savefig('mean_fill_missing_values.png') plt.show()
 
 Regression-based imputation predicts missing values using relationships with other variables or past observations. It is a more sophisticated method that can account for trends and patterns.
 
-**Python Example: Regression Imputation**
+Python Example: Regression Imputation
 
 from sklearn.linear_model import LinearRegression
 
@@ -109,13 +109,13 @@ missing_indices = data_with_gaps[data_with_gaps['Value'].isnull()]['Index'] pred
     # Fill Missing Values
 data_with_gaps.loc[data_with_gaps['Value'].isnull(), 'Value'] = predicted_values
 
-**Advantages:**
+Advantages:
 
 - Often the most accurate method due to temporal relationships.
 
 - Accounts for trends and correlations with other variables.
 
-**Drawbacks:**
+Drawbacks:
 
 - Assumes missing values have a linear relationship with other variables.
 
