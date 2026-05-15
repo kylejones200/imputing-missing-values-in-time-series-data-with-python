@@ -3,7 +3,6 @@
 
 from __future__ import annotations
 
-import sys
 from pathlib import Path
 
 import logging
@@ -15,7 +14,6 @@ logger = logging.getLogger(__name__)
 # Add src to path
 
 from dataclasses import dataclass
-from typing import Optional
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -25,7 +23,6 @@ import pandas as pd
 from src import (
     load_config,
     ensure_output_dir,
-    get_output_dir,
     save_plot,
 )
 
